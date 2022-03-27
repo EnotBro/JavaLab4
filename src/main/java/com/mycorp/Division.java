@@ -6,61 +6,45 @@ import java.util.HashMap;
  * class division
  */
 public class Division {
-    private int id;
     private String name;
 
-     private static int currentFreeId = 1;
 
     /**
-     * IDs of divisions. It contains pairs "name of division - id of division"
+     * Names of divisions. It contains pairs "name of division -division"
      */
-    private static final HashMap<String, Integer> idsOfDivisions = new HashMap<>();
+    private static final HashMap<String, Division> namesOfDivisions = new HashMap<>();
 
 
     /**
      * Creates new division with the name.
-     * ID is id from "id of divisions" that matches to the name of division.
-     * If the name doesn't exist in dictionary than we put a new pair of the name and current free id into it.
      * @param name name of division
      */
-    public Division(String name)
+    private Division(String name)
      {
          this.name=name;
-         if (idsOfDivisions.containsKey(name))
+     }
+
+    /**
+     * Gets division that already exists or makes another one and put it to the dictionary of divisions
+     * @param name name of division
+     * @return Existing division with the name or new division with the name
+     */
+     public static Division getDivisionByName(String name)
+     {
+         Division division =namesOfDivisions.get(name);
+         if (division == null)
          {
-             this.id = idsOfDivisions.get(name);
+             division = new Division(name);
+             namesOfDivisions.put(name,division);
          }
-         else
-         {
-             idsOfDivisions.put(name,currentFreeId);
-             currentFreeId++;
-         }
+         return division;
      }
 
     @Override
     public String toString() {
         return "Division{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 '}';
-    }
-
-    /**
-     * Sets new name for the division
-     * @param name new name of the division
-     */
-    public void setName(String name) {
-        if (!idsOfDivisions.containsKey(name))
-        {
-            idsOfDivisions.put(name,currentFreeId);
-            currentFreeId++;
-        }
-        this.name = name;
-        this.id = idsOfDivisions.get(name);
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getName() {

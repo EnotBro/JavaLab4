@@ -19,7 +19,12 @@ public class Main {
 
     }
 
-    static List<Person> getListOfPeopleFromFile(String filename)
+    /**
+     * Create list of people (class person) from csv file by name of the file
+     * @param filename name of the file
+     * @return list of people (class person)
+     */
+    public static List<Person> getListOfPeopleFromFile(String filename)
     {
         List<Person> people = new ArrayList<>();
         BufferedReader reader = null;
@@ -43,7 +48,7 @@ public class Main {
                 String nameOfDivision = row[4];
                 int salary = Integer.parseInt(row[5]);
 
-                people.add(new Person(id,name,gender,birthdate, new Division(nameOfDivision),salary));
+                people.add(new Person(id,name,gender,birthdate, Division.getDivisionByName(nameOfDivision),salary));
             }
         }
         catch (Exception e){
